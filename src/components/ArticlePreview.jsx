@@ -6,12 +6,18 @@ import FavoriteArticleButton from './FavoriteArticleButton'
 function ArticlePreview({ article }) {
   const { data } = useArticleQuery({ article })
   const { slug, author, createdAt, favoritesCount, favorited, title, body, tagList } = data?.article
+  const DEFAULT_AVATAR = "https://static.productionready.io/images/smiley-cyrus.jpg";
 
   return (
     <div className="article-preview" key={slug}>
       <div className="article-meta">
         <Link to={`/profile/${author?.username}`}>
-          <img src={author?.image} />
+        <img
+  src={author?.image || DEFAULT_AVATAR}
+  onError={(e) => { e.target.onerror = null; e.target.src = DEFAULT_AVATAR; }}
+  alt={author?.username}
+/>
+
         </Link>
         <div className="info">
           <Link to={`/profile/${author?.username}`} className="author">
